@@ -2467,34 +2467,6 @@
           "placeholder": ""
         }
       ]
-    },
-    {
-      "id": "debug-test",
-      "name": "Debug Test Server",
-      "description": "Fake MCP server for testing the catalog refresh flow. Safe to ignore.",
-      "category": "reference",
-      "tags": [
-        "testing",
-        "debug"
-      ],
-      "publisher": {
-        "name": "Configonaut",
-        "type": "official",
-        "verified": true
-      },
-      "homepage": "https://github.com/aaronjellis/Configonaut",
-      "repository": "https://github.com/aaronjellis/Configonaut",
-      "license": "MIT",
-      "popularity": 1,
-      "transport": "stdio",
-      "config": {
-        "command": "echo",
-        "args": [
-          "hello from debug server"
-        ]
-      },
-      "requirements": [],
-      "envVars": []
     }
   ]
 }
