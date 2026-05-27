@@ -1,8 +1,8 @@
 {
   "$schema": "https://configonaut.app/schemas/catalog-v1.json",
   "version": "1.1.0",
-  "generatedAt": "2026-04-12",
-  "source": "https://github.com/aaronellis/configonaut-catalog",
+  "generatedAt": "2026-05-27",
+  "source": "https://github.com/aaronjellis/configonaut-catalog",
   "categories": [
     {
       "id": "reference",
@@ -121,11 +121,32 @@
         "args": [
           "-y",
           "@modelcontextprotocol/server-filesystem",
-          "<PATH>"
+          "{{paths}}"
         ]
       },
       "requirements": [
         "node"
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@modelcontextprotocol/server-filesystem"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "paths",
+          "kind": "argSpread",
+          "type": "pathArray",
+          "label": "Allowed paths",
+          "description": "Directories the server can read/write.",
+          "required": true
+        }
       ]
     },
     {
@@ -157,6 +178,17 @@
       "requirements": [
         "python",
         "uv"
+      ],
+      "prerequisites": [
+        {
+          "type": "uv"
+        }
+      ],
+      "install": [
+        {
+          "type": "uvxWarmup",
+          "package": "mcp-server-fetch"
+        }
       ]
     },
     {
@@ -183,12 +215,33 @@
         "args": [
           "mcp-server-git",
           "--repository",
-          "<REPO_PATH>"
+          "{{repositoryPath}}"
         ]
       },
       "requirements": [
         "python",
         "uv"
+      ],
+      "prerequisites": [
+        {
+          "type": "uv"
+        }
+      ],
+      "install": [
+        {
+          "type": "uvxWarmup",
+          "package": "mcp-server-git"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "repositoryPath",
+          "kind": "arg",
+          "type": "path",
+          "label": "Repository path",
+          "description": "Path to the local Git repository.",
+          "required": true
+        }
       ]
     },
     {
@@ -219,6 +272,17 @@
       },
       "requirements": [
         "node"
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@modelcontextprotocol/server-memory"
+        }
       ]
     },
     {
@@ -249,6 +313,17 @@
       },
       "requirements": [
         "node"
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@modelcontextprotocol/server-sequential-thinking"
+        }
       ]
     },
     {
@@ -279,6 +354,17 @@
       "requirements": [
         "python",
         "uv"
+      ],
+      "prerequisites": [
+        {
+          "type": "uv"
+        }
+      ],
+      "install": [
+        {
+          "type": "uvxWarmup",
+          "package": "mcp-server-time"
+        }
       ]
     },
     {
@@ -309,6 +395,17 @@
       },
       "requirements": [
         "node"
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@modelcontextprotocol/server-everything"
+        }
       ]
     },
     {
@@ -333,21 +430,17 @@
       "popularity": 10,
       "transport": "stdio",
       "config": {
-        "command": "docker",
+        "command": "npx",
         "args": [
-          "run",
-          "-i",
-          "--rm",
-          "-e",
-          "GITHUB_PERSONAL_ACCESS_TOKEN",
-          "ghcr.io/github/github-mcp-server"
+          "-y",
+          "@github/github-mcp-server"
         ],
         "env": {
           "GITHUB_PERSONAL_ACCESS_TOKEN": ""
         }
       },
       "requirements": [
-        "docker"
+        "node"
       ],
       "envVars": [
         {
@@ -355,6 +448,29 @@
           "description": "Fine-grained or classic PAT with required repo scopes.",
           "required": true,
           "secret": true,
+          "placeholder": "ghp_...",
+          "helpUrl": "https://github.com/settings/tokens"
+        }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@github/github-mcp-server"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "GITHUB_PERSONAL_ACCESS_TOKEN",
+          "kind": "env",
+          "type": "secret",
+          "label": "GitHub Personal Access Token",
+          "description": "Fine-grained or classic PAT with required repo scopes.",
+          "required": true,
           "placeholder": "ghp_...",
           "helpUrl": "https://github.com/settings/tokens"
         }
@@ -391,6 +507,17 @@
       },
       "requirements": [
         "node"
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "mcp-remote"
+        }
       ]
     },
     {
@@ -420,11 +547,33 @@
         "args": [
           "-y",
           "mcp-remote",
-          "https://<YOUR_GITLAB_DOMAIN>/api/v4/mcp"
+          "https://{{gitlabDomain}}/api/v4/mcp"
         ]
       },
       "requirements": [
         "node"
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "mcp-remote"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "gitlabDomain",
+          "kind": "arg",
+          "type": "string",
+          "label": "GitLab domain",
+          "description": "Your self-hosted GitLab domain (e.g. gitlab.example.com).",
+          "required": true,
+          "placeholder": "gitlab.example.com"
+        }
       ]
     },
     {
@@ -468,6 +617,29 @@
           "placeholder": "sntrys_...",
           "helpUrl": "https://sentry.io/settings/auth-tokens/"
         }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@sentry/mcp-server"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "SENTRY_ACCESS_TOKEN",
+          "kind": "env",
+          "type": "secret",
+          "label": "Sentry Access Token",
+          "description": "Sentry auth token with project:read, org:read scopes.",
+          "required": true,
+          "placeholder": "sntrys_...",
+          "helpUrl": "https://sentry.io/settings/auth-tokens/"
+        }
       ]
     },
     {
@@ -491,8 +663,14 @@
       "popularity": 8,
       "transport": "remote",
       "config": {
-        "url": "https://mcp.atlassian.com/v1/sse"
-      }
+        "url": "https://mcp.atlassian.com/v1/mcp"
+      },
+      "prerequisites": [],
+      "install": [
+        {
+          "type": "none"
+        }
+      ]
     },
     {
       "id": "linear",
@@ -525,7 +703,18 @@
       "requirements": [
         "node"
       ],
-      "envVars": []
+      "envVars": [],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "mcp-remote"
+        }
+      ]
     },
     {
       "id": "azure-devops",
@@ -568,6 +757,28 @@
           "secret": false,
           "placeholder": "myorg"
         }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@azure-devops/mcp"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "ADO_ORGANIZATION",
+          "kind": "env",
+          "type": "string",
+          "label": "Ado Organization",
+          "description": "Azure DevOps organization name.",
+          "required": true,
+          "placeholder": "myorg"
+        }
       ]
     },
     {
@@ -595,11 +806,33 @@
         "args": [
           "-y",
           "@modelcontextprotocol/server-postgres",
-          "postgresql://<USER>:<PASS>@<HOST>/<DB>"
+          "{{connectionString}}"
         ]
       },
       "requirements": [
         "node"
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@modelcontextprotocol/server-postgres"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "connectionString",
+          "kind": "arg",
+          "type": "string",
+          "label": "Connection string",
+          "description": "PostgreSQL connection URI.",
+          "required": true,
+          "placeholder": "postgresql://user:pass@host/db"
+        }
       ]
     },
     {
@@ -627,12 +860,33 @@
         "args": [
           "mcp-server-sqlite",
           "--db-path",
-          "<PATH_TO_DB>"
+          "{{dbPath}}"
         ]
       },
       "requirements": [
         "python",
         "uv"
+      ],
+      "prerequisites": [
+        {
+          "type": "uv"
+        }
+      ],
+      "install": [
+        {
+          "type": "uvxWarmup",
+          "package": "mcp-server-sqlite"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "dbPath",
+          "kind": "arg",
+          "type": "path",
+          "label": "Database path",
+          "description": "Path to the SQLite database file.",
+          "required": true
+        }
       ]
     },
     {
@@ -676,6 +930,28 @@
           "secret": true,
           "placeholder": "mongodb+srv://user:pass@cluster.mongodb.net/"
         }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "mongodb-mcp-server"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "MDB_MCP_CONNECTION_STRING",
+          "kind": "env",
+          "type": "secret",
+          "label": "Mdb Mcp Connection String",
+          "description": "MongoDB connection URI.",
+          "required": true,
+          "placeholder": "mongodb+srv://user:pass@cluster.mongodb.net/"
+        }
       ]
     },
     {
@@ -705,12 +981,34 @@
           "redis-mcp-server@latest",
           "redis-mcp-server",
           "--url",
-          "<REDIS_URL>"
+          "{{redisUrl}}"
         ]
       },
       "requirements": [
         "python",
         "uv"
+      ],
+      "prerequisites": [
+        {
+          "type": "uv"
+        }
+      ],
+      "install": [
+        {
+          "type": "uvxWarmup",
+          "package": "redis-mcp-server@latest"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "redisUrl",
+          "kind": "arg",
+          "type": "url",
+          "label": "Redis URL",
+          "description": "Redis connection URL.",
+          "required": true,
+          "placeholder": "redis://localhost:6379"
+        }
       ]
     },
     {
@@ -755,6 +1053,29 @@
           "placeholder": "napi_...",
           "helpUrl": "https://console.neon.tech/app/settings/api-keys"
         }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@neondatabase/mcp-server-neon"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "NEON_API_KEY",
+          "kind": "env",
+          "type": "secret",
+          "label": "Neon Api Key",
+          "description": "Neon API key.",
+          "required": true,
+          "placeholder": "napi_...",
+          "helpUrl": "https://console.neon.tech/app/settings/api-keys"
+        }
       ]
     },
     {
@@ -779,7 +1100,13 @@
       "transport": "remote",
       "config": {
         "url": "https://mcp.supabase.com/mcp"
-      }
+      },
+      "prerequisites": [],
+      "install": [
+        {
+          "type": "none"
+        }
+      ]
     },
     {
       "id": "bigquery",
@@ -821,6 +1148,28 @@
           "description": "GCP project ID.",
           "required": true,
           "secret": false,
+          "placeholder": "my-gcp-project"
+        }
+      ],
+      "prerequisites": [
+        {
+          "type": "uv"
+        }
+      ],
+      "install": [
+        {
+          "type": "uvxWarmup",
+          "package": "mcp-server-bigquery"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "BIGQUERY_PROJECT",
+          "kind": "env",
+          "type": "string",
+          "label": "Bigquery Project",
+          "description": "GCP project ID.",
+          "required": true,
           "placeholder": "my-gcp-project"
         }
       ]
@@ -889,6 +1238,52 @@
           "secret": false,
           "placeholder": ""
         }
+      ],
+      "prerequisites": [
+        {
+          "type": "uv"
+        }
+      ],
+      "install": [
+        {
+          "type": "uvxWarmup",
+          "package": "snowflake-labs-mcp"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "SNOWFLAKE_ACCOUNT",
+          "kind": "env",
+          "type": "string",
+          "label": "Snowflake Account",
+          "description": "Snowflake account identifier.",
+          "required": true,
+          "placeholder": "xy12345.us-east-1"
+        },
+        {
+          "name": "SNOWFLAKE_USER",
+          "kind": "env",
+          "type": "string",
+          "label": "Snowflake User",
+          "description": "Snowflake username.",
+          "required": true
+        },
+        {
+          "name": "SNOWFLAKE_PASSWORD",
+          "kind": "env",
+          "type": "secret",
+          "label": "Snowflake Password",
+          "description": "Snowflake password.",
+          "required": true
+        },
+        {
+          "name": "SNOWFLAKE_WAREHOUSE",
+          "kind": "env",
+          "type": "string",
+          "label": "Snowflake Warehouse",
+          "description": "Default warehouse (optional).",
+          "required": false
+        }
       ]
     },
     {
@@ -931,6 +1326,27 @@
           "required": false,
           "secret": true,
           "placeholder": ""
+        }
+      ],
+      "prerequisites": [
+        {
+          "type": "uv"
+        }
+      ],
+      "install": [
+        {
+          "type": "uvxWarmup",
+          "package": "mcp-server-motherduck"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "MOTHERDUCK_TOKEN",
+          "kind": "env",
+          "type": "secret",
+          "label": "Motherduck Token",
+          "description": "MotherDuck API token (optional for local-only DuckDB).",
+          "required": false
         }
       ]
     },
@@ -983,6 +1399,36 @@
           "secret": false,
           "placeholder": ""
         }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "mcp-turso-cloud"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "TURSO_API_TOKEN",
+          "kind": "env",
+          "type": "secret",
+          "label": "Turso Api Token",
+          "description": "Turso platform API token.",
+          "required": true,
+          "placeholder": "eyJ..."
+        },
+        {
+          "name": "TURSO_ORGANIZATION",
+          "kind": "env",
+          "type": "string",
+          "label": "Turso Organization",
+          "description": "Turso organization slug.",
+          "required": true
+        }
       ]
     },
     {
@@ -1007,7 +1453,13 @@
       "transport": "remote",
       "config": {
         "url": "https://bindings.mcp.cloudflare.com/mcp"
-      }
+      },
+      "prerequisites": [],
+      "install": [
+        {
+          "type": "none"
+        }
+      ]
     },
     {
       "id": "vercel",
@@ -1031,7 +1483,13 @@
       "transport": "remote",
       "config": {
         "url": "https://mcp.vercel.com/"
-      }
+      },
+      "prerequisites": [],
+      "install": [
+        {
+          "type": "none"
+        }
+      ]
     },
     {
       "id": "netlify",
@@ -1062,6 +1520,17 @@
       },
       "requirements": [
         "node"
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@netlify/mcp"
+        }
       ]
     },
     {
@@ -1110,6 +1579,37 @@
           "secret": false,
           "placeholder": "us-east-1"
         }
+      ],
+      "prerequisites": [
+        {
+          "type": "uv"
+        }
+      ],
+      "install": [
+        {
+          "type": "uvxWarmup",
+          "package": "awslabs.core-mcp-server"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "AWS_PROFILE",
+          "kind": "env",
+          "type": "string",
+          "label": "Aws Profile",
+          "description": "AWS CLI profile name.",
+          "required": false,
+          "placeholder": "default"
+        },
+        {
+          "name": "AWS_REGION",
+          "kind": "env",
+          "type": "string",
+          "label": "Aws Region",
+          "description": "AWS region.",
+          "required": false,
+          "placeholder": "us-east-1"
+        }
       ]
     },
     {
@@ -1142,6 +1642,17 @@
       },
       "requirements": [
         "node"
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@playwright/mcp"
+        }
       ]
     },
     {
@@ -1173,6 +1684,17 @@
       },
       "requirements": [
         "node"
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "chrome-devtools-mcp"
+        }
       ]
     },
     {
@@ -1204,6 +1726,17 @@
       },
       "requirements": [
         "node"
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@modelcontextprotocol/server-puppeteer"
+        }
       ]
     },
     {
@@ -1255,6 +1788,36 @@
           "secret": false,
           "placeholder": ""
         }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@browserbasehq/mcp"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "BROWSERBASE_API_KEY",
+          "kind": "env",
+          "type": "secret",
+          "label": "Browserbase Api Key",
+          "description": "Browserbase API key.",
+          "required": true,
+          "placeholder": "bb_..."
+        },
+        {
+          "name": "BROWSERBASE_PROJECT_ID",
+          "kind": "env",
+          "type": "string",
+          "label": "Browserbase Project Id",
+          "description": "Browserbase project ID.",
+          "required": true
+        }
       ]
     },
     {
@@ -1298,6 +1861,28 @@
           "secret": true,
           "placeholder": "fc-..."
         }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "firecrawl-mcp"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "FIRECRAWL_API_KEY",
+          "kind": "env",
+          "type": "secret",
+          "label": "Firecrawl Api Key",
+          "description": "Firecrawl API key.",
+          "required": true,
+          "placeholder": "fc-..."
+        }
       ]
     },
     {
@@ -1339,6 +1924,28 @@
           "description": "Apify API token.",
           "required": true,
           "secret": true,
+          "placeholder": "apify_api_..."
+        }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@apify/actors-mcp-server"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "APIFY_TOKEN",
+          "kind": "env",
+          "type": "secret",
+          "label": "Apify Token",
+          "description": "Apify API token.",
+          "required": true,
           "placeholder": "apify_api_..."
         }
       ]
@@ -1387,6 +1994,29 @@
           "placeholder": "BSA...",
           "helpUrl": "https://brave.com/search/api/"
         }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@brave/brave-search-mcp-server"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "BRAVE_API_KEY",
+          "kind": "env",
+          "type": "secret",
+          "label": "Brave Api Key",
+          "description": "Brave Search API key.",
+          "required": true,
+          "placeholder": "BSA...",
+          "helpUrl": "https://brave.com/search/api/"
+        }
       ]
     },
     {
@@ -1428,6 +2058,28 @@
           "description": "Tavily API key.",
           "required": true,
           "secret": true,
+          "placeholder": "tvly-..."
+        }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "tavily-mcp"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "TAVILY_API_KEY",
+          "kind": "env",
+          "type": "secret",
+          "label": "Tavily Api Key",
+          "description": "Tavily API key.",
+          "required": true,
           "placeholder": "tvly-..."
         }
       ]
@@ -1473,6 +2125,27 @@
           "secret": true,
           "placeholder": ""
         }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "exa-mcp-server"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "EXA_API_KEY",
+          "kind": "env",
+          "type": "secret",
+          "label": "Exa Api Key",
+          "description": "Exa API key.",
+          "required": true
+        }
       ]
     },
     {
@@ -1515,6 +2188,27 @@
           "required": true,
           "secret": true,
           "placeholder": ""
+        }
+      ],
+      "prerequisites": [
+        {
+          "type": "uv"
+        }
+      ],
+      "install": [
+        {
+          "type": "uvxWarmup",
+          "package": "kagimcp"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "KAGI_API_KEY",
+          "kind": "env",
+          "type": "secret",
+          "label": "Kagi Api Key",
+          "description": "Kagi API key.",
+          "required": true
         }
       ]
     },
@@ -1567,6 +2261,37 @@
           "secret": false,
           "placeholder": "T01234567"
         }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@zencoderai/slack-mcp-server"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "SLACK_BOT_TOKEN",
+          "kind": "env",
+          "type": "secret",
+          "label": "Slack Bot Token",
+          "description": "Slack Bot user OAuth token.",
+          "required": true,
+          "placeholder": "xoxb-..."
+        },
+        {
+          "name": "SLACK_TEAM_ID",
+          "kind": "env",
+          "type": "string",
+          "label": "Slack Team Id",
+          "description": "Slack workspace/team ID.",
+          "required": true,
+          "placeholder": "T01234567"
+        }
       ]
     },
     {
@@ -1609,6 +2334,27 @@
           "secret": true,
           "placeholder": ""
         }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "discord-mcp-server"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "DISCORD_TOKEN",
+          "kind": "env",
+          "type": "secret",
+          "label": "Discord Token",
+          "description": "Discord bot token.",
+          "required": true
+        }
       ]
     },
     {
@@ -1640,6 +2386,17 @@
       },
       "requirements": [
         "node"
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@gongrzhe/server-gmail-autoauth-mcp"
+        }
       ]
     },
     {
@@ -1667,11 +2424,50 @@
         "args": [
           "-y",
           "@twilio-alpha/mcp",
-          "<ACCOUNT_SID>/<API_KEY>:<API_SECRET>"
+          "{{accountSid}}/{{apiKey}}:{{apiSecret}}"
         ]
       },
       "requirements": [
         "node"
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@twilio-alpha/mcp"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "accountSid",
+          "kind": "arg",
+          "type": "string",
+          "label": "Account SID",
+          "description": "Twilio account SID.",
+          "required": true,
+          "placeholder": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        },
+        {
+          "name": "apiKey",
+          "kind": "arg",
+          "type": "string",
+          "label": "API Key",
+          "description": "Twilio API key SID.",
+          "required": true,
+          "placeholder": "SKxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        },
+        {
+          "name": "apiSecret",
+          "kind": "arg",
+          "type": "secret",
+          "label": "API Secret",
+          "description": "Twilio API key secret.",
+          "required": true
+        }
       ]
     },
     {
@@ -1714,6 +2510,27 @@
           "required": true,
           "secret": true,
           "placeholder": ""
+        }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@vineethnkrishnan/intercom-mcp"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "INTERCOM_ACCESS_TOKEN",
+          "kind": "env",
+          "type": "secret",
+          "label": "Intercom Access Token",
+          "description": "Intercom access token.",
+          "required": true
         }
       ]
     },
@@ -1759,6 +2576,29 @@
           "placeholder": "{\"Authorization\": \"Bearer ntn_...\", \"Notion-Version\": \"2022-06-28\"}",
           "helpUrl": "https://www.notion.so/profile/integrations"
         }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@notionhq/notion-mcp-server"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "OPENAPI_MCP_HEADERS",
+          "kind": "env",
+          "type": "secret",
+          "label": "Openapi Mcp Headers",
+          "description": "JSON string with Notion auth header and API version.",
+          "required": true,
+          "placeholder": "{\"Authorization\": \"Bearer ntn_...\", \"Notion-Version\": \"2022-06-28\"}",
+          "helpUrl": "https://www.notion.so/profile/integrations"
+        }
       ]
     },
     {
@@ -1801,6 +2641,27 @@
           "required": true,
           "secret": true,
           "placeholder": ""
+        }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@roychri/mcp-server-asana"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "ASANA_ACCESS_TOKEN",
+          "kind": "env",
+          "type": "secret",
+          "label": "Asana Access Token",
+          "description": "Asana personal access token.",
+          "required": true
         }
       ]
     },
@@ -1853,6 +2714,36 @@
           "secret": false,
           "placeholder": ""
         }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@taazkareem/clickup-mcp-server"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "CLICKUP_API_KEY",
+          "kind": "env",
+          "type": "secret",
+          "label": "Clickup Api Key",
+          "description": "ClickUp API key.",
+          "required": true,
+          "placeholder": "pk_..."
+        },
+        {
+          "name": "CLICKUP_TEAM_ID",
+          "kind": "env",
+          "type": "string",
+          "label": "Clickup Team Id",
+          "description": "ClickUp team/workspace ID.",
+          "required": true
+        }
       ]
     },
     {
@@ -1880,11 +2771,32 @@
         "args": [
           "-y",
           "obsidian-mcp",
-          "<PATH_TO_VAULT>"
+          "{{vaultPath}}"
         ]
       },
       "requirements": [
         "node"
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "obsidian-mcp"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "vaultPath",
+          "kind": "arg",
+          "type": "path",
+          "label": "Vault path",
+          "description": "Path to the Obsidian vault directory.",
+          "required": true
+        }
       ]
     },
     {
@@ -1916,6 +2828,17 @@
       },
       "requirements": [
         "node"
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@modelcontextprotocol/server-gdrive"
+        }
       ]
     },
     {
@@ -1940,7 +2863,13 @@
       "transport": "remote",
       "config": {
         "url": "http://127.0.0.1:3845/mcp"
-      }
+      },
+      "prerequisites": [],
+      "install": [
+        {
+          "type": "none"
+        }
+      ]
     },
     {
       "id": "figma-context",
@@ -1982,6 +2911,29 @@
           "description": "Figma personal access token.",
           "required": true,
           "secret": true,
+          "placeholder": "figd_...",
+          "helpUrl": "https://www.figma.com/developers/api#access-tokens"
+        }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "figma-developer-mcp"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "FIGMA_API_KEY",
+          "kind": "env",
+          "type": "secret",
+          "label": "Figma Api Key",
+          "description": "Figma personal access token.",
+          "required": true,
           "placeholder": "figd_...",
           "helpUrl": "https://www.figma.com/developers/api#access-tokens"
         }
@@ -2027,6 +2979,27 @@
           "required": true,
           "secret": true,
           "placeholder": ""
+        }
+      ],
+      "prerequisites": [
+        {
+          "type": "uv"
+        }
+      ],
+      "install": [
+        {
+          "type": "uvxWarmup",
+          "package": "pagerduty-mcp-server"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "PAGERDUTY_USER_API_KEY",
+          "kind": "env",
+          "type": "secret",
+          "label": "Pagerduty User Api Key",
+          "description": "PagerDuty user API key.",
+          "required": true
         }
       ]
     },
@@ -2078,6 +3051,36 @@
           "required": true,
           "secret": true,
           "placeholder": ""
+        }
+      ],
+      "prerequisites": [
+        {
+          "type": "uv"
+        }
+      ],
+      "install": [
+        {
+          "type": "uvxWarmup",
+          "package": "mcp-grafana"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "GRAFANA_URL",
+          "kind": "env",
+          "type": "string",
+          "label": "Grafana Url",
+          "description": "Grafana instance URL.",
+          "required": true,
+          "placeholder": "https://grafana.example.com"
+        },
+        {
+          "name": "GRAFANA_SERVICE_ACCOUNT_TOKEN",
+          "kind": "env",
+          "type": "secret",
+          "label": "Grafana Service Account Token",
+          "description": "Grafana service account token.",
+          "required": true
         }
       ]
     },
@@ -2138,6 +3141,44 @@
           "secret": false,
           "placeholder": "datadoghq.com"
         }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "datadog-mcp-server"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "DD_API_KEY",
+          "kind": "env",
+          "type": "secret",
+          "label": "Dd Api Key",
+          "description": "Datadog API key.",
+          "required": true
+        },
+        {
+          "name": "DD_APP_KEY",
+          "kind": "env",
+          "type": "secret",
+          "label": "Dd App Key",
+          "description": "Datadog application key.",
+          "required": true
+        },
+        {
+          "name": "DD_SITE",
+          "kind": "env",
+          "type": "string",
+          "label": "Dd Site",
+          "description": "Datadog site (e.g. datadoghq.com, datadoghq.eu).",
+          "required": false,
+          "placeholder": "datadoghq.com"
+        }
       ]
     },
     {
@@ -2165,11 +3206,33 @@
         "args": [
           "-y",
           "@stripe/mcp",
-          "--api-key=<STRIPE_API_KEY>"
+          "--api-key={{stripeApiKey}}"
         ]
       },
       "requirements": [
         "node"
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@stripe/mcp"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "stripeApiKey",
+          "kind": "arg",
+          "type": "secret",
+          "label": "Stripe API key",
+          "description": "Stripe secret API key.",
+          "required": true,
+          "placeholder": "sk_..."
+        }
       ]
     },
     {
@@ -2194,7 +3257,13 @@
       "transport": "remote",
       "config": {
         "url": "https://mcp-server.plaid.com/mcp"
-      }
+      },
+      "prerequisites": [],
+      "install": [
+        {
+          "type": "none"
+        }
+      ]
     },
     {
       "id": "huggingface",
@@ -2235,6 +3304,29 @@
           "description": "Hugging Face access token.",
           "required": true,
           "secret": true,
+          "placeholder": "hf_...",
+          "helpUrl": "https://huggingface.co/settings/tokens"
+        }
+      ],
+      "prerequisites": [
+        {
+          "type": "uv"
+        }
+      ],
+      "install": [
+        {
+          "type": "uvxWarmup",
+          "package": "huggingface-mcp-server"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "HF_TOKEN",
+          "kind": "env",
+          "type": "secret",
+          "label": "Hf Token",
+          "description": "Hugging Face access token.",
+          "required": true,
           "placeholder": "hf_...",
           "helpUrl": "https://huggingface.co/settings/tokens"
         }
@@ -2281,6 +3373,28 @@
           "secret": true,
           "placeholder": "r8_..."
         }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "mcp-replicate"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "REPLICATE_API_TOKEN",
+          "kind": "env",
+          "type": "secret",
+          "label": "Replicate Api Token",
+          "description": "Replicate API token.",
+          "required": true,
+          "placeholder": "r8_..."
+        }
       ]
     },
     {
@@ -2324,6 +3438,27 @@
           "secret": true,
           "placeholder": ""
         }
+      ],
+      "prerequisites": [
+        {
+          "type": "uv"
+        }
+      ],
+      "install": [
+        {
+          "type": "uvxWarmup",
+          "package": "elevenlabs-mcp"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "ELEVENLABS_API_KEY",
+          "kind": "env",
+          "type": "secret",
+          "label": "Elevenlabs Api Key",
+          "description": "ElevenLabs API key.",
+          "required": true
+        }
       ]
     },
     {
@@ -2348,7 +3483,13 @@
       "transport": "remote",
       "config": {
         "url": "https://mcp.hubspot.com/anthropic"
-      }
+      },
+      "prerequisites": [],
+      "install": [
+        {
+          "type": "none"
+        }
+      ]
     },
     {
       "id": "salesforce",
@@ -2423,6 +3564,135 @@
           "secret": false,
           "placeholder": "https://login.salesforce.com"
         }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@tsmztech/mcp-server-salesforce"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "SALESFORCE_CONNECTION_TYPE",
+          "kind": "env",
+          "type": "string",
+          "label": "Salesforce Connection Type",
+          "description": "Auth method: User_Password, OAuth_2.0_Client_Credentials, or Salesforce_CLI.",
+          "required": true,
+          "placeholder": "User_Password"
+        },
+        {
+          "name": "SALESFORCE_USERNAME",
+          "kind": "env",
+          "type": "string",
+          "label": "Salesforce Username",
+          "description": "Salesforce username.",
+          "required": true
+        },
+        {
+          "name": "SALESFORCE_PASSWORD",
+          "kind": "env",
+          "type": "secret",
+          "label": "Salesforce Password",
+          "description": "Salesforce password.",
+          "required": true
+        },
+        {
+          "name": "SALESFORCE_TOKEN",
+          "kind": "env",
+          "type": "secret",
+          "label": "Salesforce Token",
+          "description": "Salesforce security token.",
+          "required": true
+        },
+        {
+          "name": "SALESFORCE_INSTANCE_URL",
+          "kind": "env",
+          "type": "string",
+          "label": "Salesforce Instance Url",
+          "description": "Salesforce instance URL (optional for User_Password).",
+          "required": false,
+          "placeholder": "https://login.salesforce.com"
+        }
+      ]
+    },
+    {
+      "id": "salesforce-dx",
+      "name": "Salesforce DX (Official)",
+      "description": "Official Salesforce CLI MCP — 60+ tools for org management, metadata, Apex, SOQL, data, and testing via the sf CLI.",
+      "category": "crm",
+      "tags": [
+        "salesforce",
+        "crm",
+        "devops",
+        "apex",
+        "soql"
+      ],
+      "publisher": {
+        "name": "Salesforce",
+        "type": "vendor",
+        "verified": true
+      },
+      "homepage": "https://github.com/salesforcecli/mcp",
+      "repository": "https://github.com/salesforcecli/mcp",
+      "license": "BSD-3-Clause",
+      "popularity": 7,
+      "transport": "stdio",
+      "config": {
+        "command": "npx",
+        "args": [
+          "-y",
+          "@salesforce/mcp",
+          "--orgs",
+          "{{orgs}}"
+        ]
+      },
+      "requirements": [
+        "node"
+      ],
+      "envVars": [],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@salesforce/mcp"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "orgs",
+          "kind": "arg",
+          "type": "string",
+          "label": "Target Org Alias",
+          "description": "Alias or username of the Salesforce org to connect to. Must be pre-authorized with 'sf org login web'.",
+          "required": true,
+          "placeholder": "my-sandbox"
+        }
+      ],
+      "postInstallNotes": [
+        {
+          "title": "Install the Salesforce CLI",
+          "body": "The @salesforce/mcp package requires the Salesforce CLI (sf) to be installed on your system.",
+          "url": "https://developer.salesforce.com/tools/salesforcecli"
+        },
+        {
+          "title": "Authorize your org",
+          "body": "Open a terminal and run: sf org login web --alias my-sandbox --instance-url https://login.salesforce.com. This opens a browser for OAuth login. Use the same alias you entered above.",
+          "url": "https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_web_flow.htm"
+        },
+        {
+          "title": "Restart Claude",
+          "body": "After authorizing, restart Claude Desktop or Claude Code so it picks up the new MCP server."
+        }
       ]
     },
     {
@@ -2465,6 +3735,27 @@
           "required": true,
           "secret": true,
           "placeholder": ""
+        }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "@modelcontextprotocol/server-google-maps"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "GOOGLE_MAPS_API_KEY",
+          "kind": "env",
+          "type": "secret",
+          "label": "Google Maps Api Key",
+          "description": "Google Maps Platform API key.",
+          "required": true
         }
       ]
     }
