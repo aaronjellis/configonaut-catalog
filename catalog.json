@@ -1,5 +1,5 @@
 {
-  "$schema": "https://configonaut.app/schemas/catalog-v1.json",
+  "$schema": "https://raw.githubusercontent.com/aaronjellis/Configonaut/main/marketplace-catalog/schemas/catalog-v1.json",
   "version": "1.1.0",
   "generatedAt": "2026-05-27",
   "source": "https://github.com/aaronjellis/configonaut-catalog",
@@ -81,6 +81,12 @@
       "label": "Media",
       "icon": "music",
       "description": "Audio, video, and image generation."
+    },
+    {
+      "id": "social",
+      "label": "Social & Marketing",
+      "icon": "share-2",
+      "description": "Social media automation, monitoring, and publishing tools."
     },
     {
       "id": "crm",
@@ -1536,7 +1542,7 @@
     {
       "id": "aws",
       "name": "AWS (AWS Labs)",
-      "description": "Core AWS services — S3, Lambda, CloudFormation, and more.",
+      "description": "Core AWS services - S3, Lambda, CloudFormation, and more.",
       "category": "cloud",
       "tags": [
         "aws",
@@ -3492,6 +3498,88 @@
       ]
     },
     {
+      "id": "xquik",
+      "name": "Xquik",
+      "description": "X/Twitter automation, analytics, monitoring, and publishing through a hosted MCP server.",
+      "category": "social",
+      "tags": [
+        "x",
+        "twitter",
+        "social-media",
+        "analytics",
+        "automation"
+      ],
+      "publisher": {
+        "name": "Xquik",
+        "type": "vendor",
+        "verified": true
+      },
+      "homepage": "https://xquik.com",
+      "repository": "https://github.com/Xquik-dev/x-twitter-scraper",
+      "license": "MIT",
+      "popularity": 6,
+      "transport": "stdio",
+      "config": {
+        "command": "npx",
+        "args": [
+          "-y",
+          "mcp-remote@0.1.38",
+          "https://xquik.com/mcp",
+          "--transport",
+          "http-only",
+          "--header",
+          "x-api-key:${XQUIK_API_KEY}",
+          "--silent"
+        ],
+        "env": {
+          "XQUIK_API_KEY": ""
+        }
+      },
+      "requirements": [
+        "node"
+      ],
+      "envVars": [
+        {
+          "name": "XQUIK_API_KEY",
+          "description": "Xquik API key for the hosted MCP endpoint.",
+          "required": true,
+          "secret": true,
+          "placeholder": "xq_...",
+          "helpUrl": "https://docs.xquik.com/mcp/overview"
+        }
+      ],
+      "prerequisites": [
+        {
+          "type": "node"
+        }
+      ],
+      "install": [
+        {
+          "type": "npmWarmup",
+          "package": "mcp-remote@0.1.38"
+        }
+      ],
+      "configFields": [
+        {
+          "name": "XQUIK_API_KEY",
+          "kind": "env",
+          "type": "secret",
+          "label": "Xquik API key",
+          "description": "Xquik API key forwarded to the hosted MCP endpoint.",
+          "required": true,
+          "placeholder": "xq_...",
+          "helpUrl": "https://docs.xquik.com/mcp/overview"
+        }
+      ],
+      "postInstallNotes": [
+        {
+          "title": "Keep publishing tools approval-gated",
+          "body": "Review generated X/Twitter content before sending it through Xquik automation tools.",
+          "url": "https://docs.xquik.com/mcp/overview"
+        }
+      ]
+    },
+    {
       "id": "salesforce",
       "name": "Salesforce",
       "description": "Query and manage Salesforce objects and records.",
@@ -3624,7 +3712,7 @@
     {
       "id": "salesforce-dx",
       "name": "Salesforce DX (Official)",
-      "description": "Official Salesforce CLI MCP — 60+ tools for org management, metadata, Apex, SOQL, data, and testing via the sf CLI.",
+      "description": "Official Salesforce CLI MCP - 60+ tools for org management, metadata, Apex, SOQL, data, and testing via the sf CLI.",
       "category": "crm",
       "tags": [
         "salesforce",
